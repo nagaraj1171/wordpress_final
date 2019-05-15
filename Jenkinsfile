@@ -52,5 +52,13 @@ node{
                             sh("NAME=`minikube service list|grep wordpress |awk '{print ''\$''6}'`")
 
                             }
+    timeout(5) {
+    waitUntil {
+       script {
+         def r = sh script: 'wget -q (minikube service wordpress --url) -O /dev/null', returnStatus: true
+         return (r == 0);
+       }
+    }
+}
       }
   }
