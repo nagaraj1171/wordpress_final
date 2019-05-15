@@ -44,7 +44,8 @@ Second we need to create the pipleline in Jenkins.
 5. Select "This project is parameterized" and add in 3 parameters and choose the parameter type accordingly.    
     1. DOCKER_USERNAME (This is a docker registry username, type string)
     2. DOCKER_PASSWORD (This is to key in docker registry password, type password)
-    3. namespace_gui ( This is for future enhancements to configure stage,development and production deployments, type choice)
+    3. namespace_gui (This is for future enhancements to configure stage,development and production deployments, type choice)
+    4. mysql_password (This is to key in mysql password)
 6. You can choose the approprate options in Build Triggers based on the need.
 7. Last but not the least, Pipeline section here we need to select Pipeline script from SCM. Select Git as SCM and provide the repository URL and details.
    Ensure the script path to be Jenkinsfile

@@ -15,7 +15,7 @@ spec:
         app: wordpress
     spec:
       containers:
-        - image: nagaraj1171/wordpress:v11.1
+        - image: nagaraj1171/wordpress:v11.2
           name: wordpress
           env:
           - name: WORDPRESS_DB_HOST
