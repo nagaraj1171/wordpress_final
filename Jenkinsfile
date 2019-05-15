@@ -47,7 +47,7 @@ node{
                           sh("kubectl apply -k .")
 
                           // Check for Service
-                            sh("minikube service wordpress --url")
+                            sh("url_c=`minikube service wordpress --url`")
                             sh("kubectl get pods -o=wide")
                             sh("NAME=`minikube service list|grep wordpress |awk '{print ''\$''6}'`")
 
@@ -55,7 +55,7 @@ node{
     timeout(5) {
     waitUntil {
        script {
-         def r = sh script: 'wget -q (minikube service wordpress --url) -O /dev/null', returnStatus: true
+         def r = sh script: 'wget -q $url_c -O /dev/null', returnStatus: true
          return (r == 0);
        }
     }
