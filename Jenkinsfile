@@ -55,7 +55,7 @@ node{
     timeout(5) {
     waitUntil {
        script {
-         def r = sh script: 'url_c=`minikube service wordpress --url`; wget -q $url_c -O /dev/null', returnStatus: true
+         def r = sh script: 'url_c=`minikube service wordpress --url`; wget --retry-connrefused --tries=120 --waitretry=1 -q $url_c -O /dev/null', returnStatus: true
          return (r == 0);
        }
     }
