@@ -44,7 +44,7 @@ node{
 
                           // Create Contentful Service
                           sh("ls")
-                                sh("kubectl apply -k .")
+                                sh("kubectl apply -f .")
                                 //sh("kubectl create -f wordpress.yaml")
                                 //sh ("kubectl get pod -l app=wordpress")
                                 //sh("kubectl create -f wordpress-service.yaml")
