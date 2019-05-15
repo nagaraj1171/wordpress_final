@@ -24,13 +24,12 @@ node{
         stage('Push image to registry') {
             sh("docker push nagaraj1171/${imageTag}")
         }
-    //Stage 3 : Cleaning
+
+    //Stage 3 : Clean the old images
             stage('Cleaning Old docker and k8 images') {
-                //sh("kubectl delete -f .")
-                //sh("chmod +x run_destroy.sh")
-                //sh("./run_destroy.sh")
-                //sh('''docker rmi $(docker images -f 'dangling=true' -q) || true
-                    //docker rmi $(docker images | sed 1,2d | awk '{print "\$3"}') || true''')
+                sh("kubectl delete -f .")
+                sh('''docker rmi $(docker images -f 'dangling=true' -q) || true
+                    docker rmi $(docker images | sed 1,2d | awk '{print "\$3"}') || true''')
             }
 
     //Stage 4 : Deploy Application
@@ -40,23 +39,17 @@ node{
                    switch (namespace) {
                           //Roll out to Dev Environment
                           case "development":
-                          //sh ("kubectl apply -f wordpress-volumeclaim.yaml")
 
-                          // Create Contentful Service
-                          sh("ls")
-                                sh("kubectl apply -f .")
-                                //sh("kubectl create -f wordpress.yaml")
-                                //sh ("kubectl get pod -l app=wordpress")
-                                //sh("kubectl create -f wordpress-service.yaml")
-                                //sh ("kubectl get svc -l app=wordpress")
-                                //sh ("if [ `kubectl get pods -o=wide|grep Running | awk '{print \$3}'` = "Running" ]; then `kubectl get pod -l app=wordpress`; sleep 5; else echo "Not Running"; fi"
-                                //sh('''while [ ''kubectl get pods -o=wide|grep Running | awk '{print "\$3"}''' != 'Running' ]; do kubectl get pod -l app=wordpress; sleep 5; done''')
+                          sh ("kubectl create secret generic mysql --from-literal=password=${mysql_password} &>/dev/null")
+
+                          // Create K8 Services
+
+                          sh("kubectl apply -f .")
 
                           // Check for Service
-                                sh("minikube service wordpress --url")
-                                sh("kubectl get pods -o=wide")
-                                sh("NAME=`minikube service list|grep wordpress |awk '{print ''\$''6}'`")
-                                sh("hostname")
+                            sh("minikube service wordpress --url")
+                            sh("kubectl get pods -o=wide")
+                            sh("NAME=`minikube service list|grep wordpress |awk '{print ''\$''6}'`")
                             }
       }
   }
