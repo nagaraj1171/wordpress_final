@@ -52,6 +52,7 @@ node{
                             sh("NAME=`minikube service list|grep wordpress |awk '{print ''\$''6}'`")
 
                             }
+    // Stage 5 : Wait for services to be up or for 120 retries
     timeout(5) {
     waitUntil {
        script {
